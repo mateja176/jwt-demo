@@ -1,9 +1,9 @@
 import * as request from 'supertest';
-import app from './app';
+import { createApp } from './app';
 
 describe('Server', () => {
   it('Hello World', done => {
-    request(app)
+    request(createApp([]))
       .get('/')
       .expect(200)
       .expect(JSON.stringify('Hello World'))
