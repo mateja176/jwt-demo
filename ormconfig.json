@@ -1,9 +1,4 @@
 {
-  "type": "mongodb",
-  "host": "localhost",
-  "database": "jwt",
-  "useNewUrlParser": true,
-  "useUnifiedTopology": true,
   "synchronize": true,
   "logging": false,
   "entities": ["src/entity/**/*.ts"],
