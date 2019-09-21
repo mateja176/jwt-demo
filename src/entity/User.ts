@@ -1,11 +1,13 @@
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
 
-export class UserDto {
+export class UserBase {
   @Column({
     unique: true,
   })
   email: string;
+}
 
+export class UserDto extends UserBase {
   @Column()
   password: string;
 }
@@ -24,4 +26,8 @@ export class User extends UserDto {
 
     return user;
   };
+}
+
+export class UserSerialized extends UserBase {
+  id: string;
 }
