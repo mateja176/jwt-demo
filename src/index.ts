@@ -7,10 +7,13 @@ import { Request } from './models';
 createConnection()
   .then(async connection => {
     const user = User.create({
-      email: 'john@doe.com',
+      email: 'jack@doe.com',
       password: '123',
     });
-    connection.manager.save(user);
+    const userRepo = connection.getRepository(User);
+    const jack = await userRepo.save(user);
+    const jane = await userRepo.findOne({ email: 'jane@doe.com' });
+    console.log(jack, ' and ', jane);
 
     app.use((req: Request, res, next) => {
       req.db = connection;
