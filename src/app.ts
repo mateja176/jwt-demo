@@ -1,11 +1,16 @@
+import { compose } from 'compose-middleware';
 import * as express from 'express';
 
-const app = express();
+export const createApp = (middleware: express.RequestHandler[]) => {
+  const app = express();
 
-app.use(express.json());
+  app.use(compose(middleware));
 
-app.get('/', (req, res) => {
-  res.json('Hello World');
-});
+  app.use(express.json());
 
-export default app;
+  app.get('/', (req, res) => {
+    res.json('Hello World');
+  });
+
+  return app;
+};

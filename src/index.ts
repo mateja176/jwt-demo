@@ -1,24 +1,26 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import app from './app';
+import { createApp } from './app';
 import { User } from './entity/User';
 import { Request } from './models';
 
 createConnection()
   .then(async connection => {
     const user = User.create({
-      email: 'jimmy@doe.com',
+      email: 'julian@doe.com',
       password: '123',
     });
     const userRepo = connection.getRepository(User);
-    const jimmy = await userRepo.save(user);
+    const julian = await userRepo.save(user);
     const jane = await userRepo.findOne({ email: 'jane@doe.com' });
-    console.log(jimmy, ' and ', jane);
+    console.log(julian, ' and ', jane);
 
-    app.use((req: Request, res, next) => {
-      req.db = connection;
-      next();
-    });
+    const app = createApp([
+      (req: Request, res, next) => {
+        req.db = connection;
+        next();
+      },
+    ]);
 
     const port = process.env.PORT || 3000;
 
