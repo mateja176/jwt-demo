@@ -1,18 +1,11 @@
-import { prop, Typegoose } from 'typegoose';
-
-const tg = new Typegoose();
+import { Column } from 'typeorm';
 
 export class User {
-  @prop({
-    required: true,
+  @Column({
     unique: true,
   })
   email: string;
 
-  @prop({
-    required: true,
-  })
+  @Column()
   password: string;
 }
-
-export const UserModel = tg.getModelForClass(User);
