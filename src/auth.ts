@@ -9,9 +9,9 @@ export const addJwtStrategy = (passport: PassportStatic): PassportStatic =>
         secretOrKey: jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
-      async (token, done): Promise<void> => {
+      async (payload, done): Promise<void> => {
         try {
-          done(null, token.user);
+          done(null, payload.user);
         } catch (error) {
           done(error);
         }
