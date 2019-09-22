@@ -20,6 +20,8 @@
     "max-classes-per-file": "off",
     "import/no-unresolved": "off",
     "import/no-extraneous-dependencies": "off",
-    "implicit-arrow-linebreak": "off"
+    "implicit-arrow-linebreak": "off",
+    "arrow-parens": "off",
+    "no-console": "off"
   }
 }
