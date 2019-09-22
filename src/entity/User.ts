@@ -17,7 +17,7 @@ export class User extends UserDto {
   @ObjectIdColumn()
   id: string;
 
-  static create = (dto: UserDto) => {
+  static create = (dto: UserDto): User => {
     const user = new User();
 
     Object.entries(dto).forEach(([key, value]) => {

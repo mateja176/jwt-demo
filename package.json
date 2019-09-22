@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node src",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "lint": "eslint src/**/*.ts"
   },
   "keywords": [],
   "author": "Mateja Petrovic <mateja176@gmail.com> (https://github.com/mateja176)",
@@ -21,6 +22,11 @@
     "@types/passport-jwt": "^3.0.2",
     "@types/passport-local": "^1.0.33",
     "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "jest": "^24.9.0",
     "mongodb-memory-server": "^5.2.3",
     "nodemon": "^1.19.2",
