@@ -2,18 +2,18 @@ import { PassportStatic } from 'passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtSecret } from './config/jwt';
 
-export const addJwtStrategy = (passport: PassportStatic) =>
+export const addJwtStrategy = (passport: PassportStatic): PassportStatic =>
   passport.use(
     new Strategy(
       {
         secretOrKey: jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
-      async (token, done) => {
+      async (token, done): Promise<void> => {
         try {
-          return done(null, token.user);
+          done(null, token.user);
         } catch (error) {
-          return done(error);
+          done(error);
         }
       },
     ),
