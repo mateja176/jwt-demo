@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node src",
-    "dev": "nodemon src"
+    "dev": "nodemon src/index.ts"
   },
   "keywords": [],
   "author": "Mateja Petrovic <mateja176@gmail.com> (https://github.com/mateja176)",
