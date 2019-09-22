@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Connection } from 'typeorm';
 import { User } from './entity/User';
 import { Request } from './models';
+import profileRoute from './routes/profile';
 
 export const createApp = (connection: Connection) => {
   const app = express();
@@ -21,6 +22,8 @@ export const createApp = (connection: Connection) => {
     const users = await req.db.getRepository(User).find();
     res.json(users);
   });
+
+  app.use('/profile', profileRoute);
 
   return app;
 };
