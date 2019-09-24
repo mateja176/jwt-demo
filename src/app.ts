@@ -9,8 +9,6 @@ import { User } from './entity/User';
 import { Request } from './models';
 import profileRoute from './routes/profile';
 
-// declare passport jwt based authentication middleware
-const authenticate = passport.authenticate('jwt', { session: false });
 // set up passport
 passport.use(
   new Strategy(
@@ -23,6 +21,8 @@ passport.use(
     },
   ),
 );
+// declare passport jwt based authentication middleware
+const authenticate = passport.authenticate('jwt', { session: false });
 
 export const createApp = (connection: Connection): express.Express => {
   const app = express();
@@ -31,33 +31,40 @@ export const createApp = (connection: Connection): express.Express => {
     req.db = connection;
     next();
   });
+
   app.use(express.json());
 
   app.get('/', (req, res) => {
     res.send('Hello World');
   });
+
   app.get('/users', async (req: Request, res) => {
     const users = await req.db.getRepository(User).find();
+
     res.json(users);
   });
 
   app.post(
     '/join',
-    async (req: Request, res, next) => {
+    (req: Request, res, next) => {
       const { headers } = req;
       if (!Object.keys(headers).includes('authorization')) {
         // user has joined
         const {
           body: { name, armyCount },
         } = req;
+
         // TODO validate args
         if (isNil(name) || isNil(armyCount)) {
           res.status(400);
-          return next('name and army are required');
+
+          return next('"name" and "army" parameters are required');
         }
+
         const token = jwt.sign({ army: { name, armyCount } }, jwtSecret);
         return res.json({ token });
       }
+
       return next();
     },
     authenticate,
