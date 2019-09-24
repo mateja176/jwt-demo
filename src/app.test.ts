@@ -36,7 +36,7 @@ describe('Server', () => {
       .expect('Hello World')
       .end(done);
   });
-  it('should return user profiles', async done => {
+  it('should return users', async done => {
     const testUser: UserDto = { email: 'test@test.com', password: '123' };
     const user = User.create(testUser);
     const userRepo = connection.getRepository(User);
