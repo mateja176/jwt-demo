@@ -33,7 +33,7 @@ describe('Server', () => {
     request(app)
       .get('/')
       .expect(200)
-      .expect(JSON.stringify('Hello World'))
+      .expect('Hello World')
       .end(done);
   });
   it('should return user profiles', async done => {
@@ -43,11 +43,11 @@ describe('Server', () => {
     await userRepo.save(user);
 
     request(app)
-      .get('/profile')
+      .get('/users')
       .expect(200)
       .expect(res =>
-        res.body.forEach(profile => {
-          delete profile.id;
+        res.body.forEach((u: User) => {
+          delete u.id;
         }),
       )
       .expect([testUser])

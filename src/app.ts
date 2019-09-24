@@ -15,7 +15,7 @@ export const createApp = (connection: Connection) => {
   app.use(express.json());
 
   app.get('/', (req, res) => {
-    res.json('Hello World');
+    res.send('Hello World');
   });
 
   app.get('/users', async (req: Request, res) => {
