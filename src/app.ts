@@ -4,6 +4,7 @@ import { isNil } from 'lodash';
 import * as passport from 'passport';
 import { Connection } from 'typeorm';
 import { jwtSecret } from './config/jwt';
+import { Army } from './entity/Army';
 import { User } from './entity/User';
 import { Request } from './models';
 import { passportInit } from './passport/init';
@@ -33,22 +34,26 @@ export const createApp = (connection: Connection): express.Express => {
 
   app.post(
     '/join',
-    (req: Request, res, next) => {
+    async (req: Request, res, next) => {
       const { headers } = req;
       if (!Object.keys(headers).includes('authorization')) {
         // user has joined
-        const {
-          body: { name, armyCount },
-        } = req;
+        const { body } = req;
+
+        const { name, squadCount } = body;
 
         // TODO validate args
-        if (isNil(name) || isNil(armyCount)) {
+        if (isNil(name) || isNil(squadCount)) {
           res.status(400);
 
-          return next('"name" and "army" parameters are required');
+          return next('"name" and "squadCount" parameters are required');
         }
 
-        const token = jwt.sign({ army: { name, armyCount } }, jwtSecret);
+        const army = Army.create(body);
+
+        await req.db.getRepository(Army).save(army);
+
+        const token = jwt.sign({ army: { name, squadCount } }, jwtSecret);
         return res.json({ token });
       }
 
