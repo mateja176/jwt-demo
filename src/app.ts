@@ -26,6 +26,17 @@ export const createApp = (connection: Connection): express.Express => {
     res.send('Hello World');
   });
 
+  app.get('/error', (req, res, next) => {
+    next('Hello World');
+  });
+
+  app.get('/open', (req, res) => {
+    res.write('Opened connection');
+    req.on('close', () => {
+      console.log('closed');
+    });
+  });
+
   app.get('/users', async (req: Request, res) => {
     const users = await req.db.getRepository(User).find();
 
