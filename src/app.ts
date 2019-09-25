@@ -2,27 +2,14 @@ import * as express from 'express';
 import * as jwt from 'jsonwebtoken';
 import { isNil } from 'lodash';
 import * as passport from 'passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Connection } from 'typeorm';
 import { jwtSecret } from './config/jwt';
 import { User } from './entity/User';
 import { Request } from './models';
+import { passportInit } from './passport/init';
 import profileRoute from './routes/profile';
 
-// set up passport
-passport.use(
-  new Strategy(
-    {
-      secretOrKey: jwtSecret,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    },
-    ({ army }, done): void => {
-      done(null, army);
-    },
-  ),
-);
-// declare passport jwt based authentication middleware
-const authenticate = passport.authenticate('jwt', { session: false });
+const authenticate = passportInit(passport);
 
 export const createApp = (connection: Connection): express.Express => {
   const app = express();
